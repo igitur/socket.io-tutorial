@@ -6,9 +6,15 @@ const roomInput = document.getElementById('room-input');
 const form = document.getElementById('form');
 
 const socket = io('http://localhost:3000')
+const userSocket = io('http://localhost:3000/user') //also, connect to namespace (more useful to allow middleware)
+// const userSocket = io('http://localhost:3000/user', { auth: { token: "Test" } }) //also, connect to namespace (more useful to allow middleware)
+
+userSocket.on('connect_error', error => {
+    displayMessage(error);
+})
+
 socket.on( 'connect', () => {
     displayMessage(`You connected with id: ${socket.id}`);
-    socket.emit('custom-event', 10, 'hi', {a: 'a'})
 })
 
 socket.on('recieve-message', message => {
@@ -40,3 +46,16 @@ function displayMessage(message) {
     div.textContent = message;
     document.getElementById('message-container').append(div);
 }
+
+let count = 0;
+setInterval(() => {
+    // socket.emit('ping', ++count);    //default behavior is to try and send message once reconnected
+    socket.volatile.emit('ping', ++count); //if disconnected, don't bother saving and sending all at once
+}, 1000)
+
+document.addEventListener('keydown', e => {
+    if (e.target.matches('input')) return
+
+    if (e.key === "c") socket.connect();
+    if (e.key === "d") socket.disconnect();
+})
