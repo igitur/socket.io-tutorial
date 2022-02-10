@@ -9,10 +9,17 @@ const socket = io('http://localhost:3000')
 const userSocket = io('http://localhost:3000/user') //also, connect to namespace (more useful to allow middleware)
 // const userSocket = io('http://localhost:3000/user', { auth: { token: "Test" } }) //also, connect to namespace (more useful to allow middleware)
 
-userSocket.on('connect_error', error => {
+
+// userSocket.on('connect_error', error => {
+//     displayMessage(error);
+// })
+
+//Socket listens for connection error
+socket.on( 'connect_error', error => {
     displayMessage(error);
 })
 
+//Socket listens for connection success
 socket.on( 'connect', () => {
     displayMessage(`You connected with id: ${socket.id}`);
 })

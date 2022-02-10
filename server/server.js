@@ -22,7 +22,7 @@ userIo.use((socket, next) => {
     }
 })
 
-
+//Main connection code
 io.on('connection', socket => {
     console.log(socket.id)
     socket.on('send-message', (message, room) => {
@@ -39,7 +39,7 @@ io.on('connection', socket => {
         socket.join(room);
         callback(`Joined ${room}`);
     })
-    socket.on('ping', n => console.log(n))
+    // socket.on('ping', n => console.log(n))
 })
 
 instrument(io, { auth: false })
