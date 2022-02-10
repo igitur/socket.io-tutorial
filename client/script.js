@@ -47,15 +47,15 @@ function displayMessage(message) {
     document.getElementById('message-container').append(div);
 }
 
-let count = 0;
-setInterval(() => {
-    // socket.emit('ping', ++count);    //default behavior is to try and send message once reconnected
-    socket.volatile.emit('ping', ++count); //if disconnected, don't bother saving and sending all at once
-}, 1000)
+// let count = 0;
+// setInterval(() => {
+//     // socket.emit('ping', ++count);    //default behavior is to try and send message once reconnected
+//     socket.volatile.emit('ping', ++count); //if disconnected, don't bother saving and sending all at once
+// }, 1000)
 
-document.addEventListener('keydown', e => {
-    if (e.target.matches('input')) return
+// document.addEventListener('keydown', e => {
+//     if (e.target.matches('input')) return
 
-    if (e.key === "c") socket.connect();
-    if (e.key === "d") socket.disconnect();
-})
+//     if (e.key === "c") socket.connect();
+//     if (e.key === "d") socket.disconnect();
+// })
